@@ -1,13 +1,7 @@
-//
-//  ViewController.swift
-//  RxTest
-//
-//  Created by 정명곤 on 10/21/24.
-//
 
 import UIKit
 
-class ViewController: UIViewController {
+public class ViewController: UIViewController {
 //  private var viewModel: ViewModel
 //  private var disposeBag = DisposeBag()
 
@@ -24,25 +18,25 @@ class ViewController: UIViewController {
     return button
   }()
 
-//  let tableView: UITableView = {
-//    let tableView = UITableView()
-//    tableView.translatesAutoresizingMaskIntoConstraints = false
-//    tableView.frame = CGRect(origin: .zero, size: .zero)
-//    tableView.backgroundColor = .black
-//    tableView.register(TableViewCell.self, forCellReuseIdentifier: TableViewCell.identifier)
-//    return tableView
-//  }()
+  let tableView: UITableView = {
+    let tableView = UITableView()
+    tableView.translatesAutoresizingMaskIntoConstraints = false
+    tableView.frame = CGRect(origin: .zero, size: .zero)
+    tableView.backgroundColor = .black
+    tableView.register(TableViewCell.self, forCellReuseIdentifier: TableViewCell.identifier)
+    return tableView
+  }()
 
-//  init() {
-//    self.viewModel = viewModel
-//    super.init(nibName: nil, bundle: nil)
-//  }
-//
-//  required init?(coder: NSCoder) {
-//    fatalError("init(coder:) has not been implemented")
-//  }
+  init() {
+    self.viewModel = viewModel
+    super.init(nibName: nil, bundle: nil)
+  }
 
-  override func viewDidLoad() {
+  required init?(coder: NSCoder) {
+    fatalError("init(coder:) has not been implemented")
+  }
+
+  public override func viewDidLoad() {
     super.viewDidLoad()
     self.view.backgroundColor = .systemBlue
 

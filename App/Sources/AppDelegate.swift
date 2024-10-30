@@ -1,7 +1,7 @@
 import UIKit
-//import Presentation
-//import Data
-//import Domain
+import Presentation
+import Data
+import Domain
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
