@@ -11,9 +11,8 @@ import RxSwift
 import Domain
 
 
-final class ViewModel {
-  private let network = Network()
-  let disposeBag = DisposeBag()
+public final class ViewModel {
+  private let useCase: UseCase
 
   struct Input {
     let refresh: Observable<Void>
@@ -24,27 +23,19 @@ final class ViewModel {
     let movieList: Observable<[Movie]>
   }
 
+  public init(useCase: UseCase) {
+    self.useCase = useCase
+  }
+
   func transform(from input: Input) -> Output {
 
     let movieList = input.refresh
-                .flatMapLatest { [weak self] _ -> Observable<[Movie]> in
+                .flatMap { [weak self] _ -> Observable<[Movie]> in
                     guard let self = self else { return Observable.just([]) }
-                    return self.getMovies()
+                  return useCase.fetchMovie()
                 }
 
     return Output(movieList: movieList)
-  }
-
-
-  func getMovies() -> Observable<[Movie]> {
-    guard let url = URL(string: "https://yts.mx/api/v2/list_movies.json") else { return Observable.just([]) }
-    return network.fetchMovieInfo(url: url).map { data in
-      guard let movieData = try? JSONDecoder().decode(MovieDataResponse.self, from: data) else {
-                          return []
-                      }
-                      return movieData.data.movies
-    }
-    .catchAndReturn([])
   }
 
 }

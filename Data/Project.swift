@@ -12,7 +12,7 @@ let project = Project(
       sources: ["Sources/**"],
       dependencies: [
         // Third party
-        .external(name: "RxSwift", condition: .none),
+//        .external(name: "RxSwift", condition: .none),
 
         // Module
         .project(target: "Domain", path: .relativeToRoot("Domain/"), status: .required, condition: .none),

@@ -1,13 +1,13 @@
 
 import UIKit
+import RxSwift
+import RxCocoa
 
 public class ViewController: UIViewController {
-//  private var viewModel: ViewModel
-//  private var disposeBag = DisposeBag()
+  private var viewModel: ViewModel
+  private var disposeBag = DisposeBag()
 
-//  var movies: [Movie] = []
-
-//  let viewDidAppearTrigger = PublishSubject<Void>()
+  let viewDidAppearTrigger = PublishSubject<Void>()
 
   let button: UIButton = {
     let button = UIButton()
@@ -27,7 +27,7 @@ public class ViewController: UIViewController {
     return tableView
   }()
 
-  init() {
+  public init(viewModel: ViewModel) {
     self.viewModel = viewModel
     super.init(nibName: nil, bundle: nil)
   }
@@ -42,31 +42,31 @@ public class ViewController: UIViewController {
 
     setView()
     setLayout()
-//    bind()
+    bind()
 
 
-//    viewDidAppearTrigger.onNext(())
+    viewDidAppearTrigger.onNext(())
   }
 
-//  func bind() {
-//    let input = ViewModel.Input(refresh: viewDidAppearTrigger)
-//
-//    let output = viewModel.transform(from: input)
-//
-//    output.movieList
-//      .observe(on: MainScheduler.instance)
-//      .bind(to: tableView.rx.items(cellIdentifier: TableViewCell.identifier, cellType: TableViewCell.self)) { (row, movie, cell) in
-//        cell.setup(movie: movie)
-//      }
-//      .disposed(by: disposeBag)
-//  }
+  func bind() {
+    let input = ViewModel.Input(refresh: viewDidAppearTrigger)
+
+    let output = viewModel.transform(from: input)
+
+    output.movieList
+      .observe(on: MainScheduler.instance)
+      .bind(to: tableView.rx.items(cellIdentifier: TableViewCell.identifier, cellType: TableViewCell.self)) { (row, movie, cell) in
+        cell.setup(movie: movie)
+      }
+      .disposed(by: disposeBag)
+  }
 
 }
 
 extension ViewController {
   func setView() {
     view.addSubview(button)
-//    view.addSubview(tableView)
+    view.addSubview(tableView)
   }
 
   func setLayout() {
@@ -75,9 +75,9 @@ extension ViewController {
     button.trailingAnchor.constraint(equalTo: view.trailingAnchor).isActive = true
     button.heightAnchor.constraint(equalToConstant: 100).isActive = true
 
-//    tableView.topAnchor.constraint(equalTo: button.bottomAnchor, constant: 20).isActive = true
-//    tableView.leadingAnchor.constraint(equalTo: view.leadingAnchor).isActive = true
-//    tableView.trailingAnchor.constraint(equalTo: view.trailingAnchor).isActive = true
-//    tableView.bottomAnchor.constraint(equalTo: view.bottomAnchor).isActive = true
+    tableView.topAnchor.constraint(equalTo: button.bottomAnchor, constant: 20).isActive = true
+    tableView.leadingAnchor.constraint(equalTo: view.leadingAnchor).isActive = true
+    tableView.trailingAnchor.constraint(equalTo: view.trailingAnchor).isActive = true
+    tableView.bottomAnchor.constraint(equalTo: view.bottomAnchor).isActive = true
   }
 }

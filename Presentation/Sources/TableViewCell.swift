@@ -7,10 +7,13 @@
 //
 
 import UIKit
+import RxSwift
 import Domain
 
 final class TableViewCell: UITableViewCell {
   static let identifier = "tableViewCell"
+
+  private var disposeBag = DisposeBag()
 
   var thumbnail: UIImageView = {
     let imageView = UIImageView()
@@ -36,6 +39,31 @@ final class TableViewCell: UITableViewCell {
 
   func setup(movie: Movie) {
     self.titleLabel.text = movie.title
+    if let imageURL = movie.coverImage {
+      loadImage(from: imageURL)
+        .observe(on: MainScheduler.instance)
+        .bind(to: thumbnail.rx.image)
+        .disposed(by: disposeBag)
+    }
+  }
+
+  private func loadImage(from url: String) -> Observable<UIImage?> {
+    guard let url = URL(string: url) else { return Observable.just(nil) }
+    return Observable.create { observer in
+      let task = URLSession.shared.dataTask(with: url) { data, response, error in
+        if let error {
+          observer.onError(error)
+        } else if let data = data,
+                  let image = UIImage(data: data) {
+          observer.onNext(image)
+          observer.onCompleted()
+        }
+      }
+      task.resume()
+      return Disposables.create {
+        task.cancel()
+      }
+    }
   }
 }
 

@@ -13,6 +13,7 @@ let project = Project(
       dependencies: [
         // Third party
         .external(name: "RxSwift", condition: .none),
+        .external(name: "RxCocoa", condition: .none),
 
         // Module
       ],
