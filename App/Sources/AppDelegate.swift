@@ -20,9 +20,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     let viewController = ViewController(viewModel: viewModel)
 
-    // Set up Coordinator if using the Coordinator pattern (optional)
-    //            appCoordinator = AppCoordinator(window: window, rootViewController: initialViewController)
-    //            appCoordinator?.start()
+    // Set up Coordinator if using the Coordinator pattern
+//                appCoordinator = AppCoordinator(window: window, rootViewController: initialViewController)
+//                appCoordinator?.start()
 
     window?.rootViewController = viewController
     window?.makeKeyAndVisible()
