@@ -2,8 +2,19 @@ import ProjectDescription
 
 
 let infoPlist: [String: Plist.Value] = [
-  "UILaunchStoryboardName": "LaunchScreen", // 화면 정상적으로 띄우기
-  "CFBundleVersion": "1" // 번들 버전 오류 방지
+  "UILaunchStoryboardName": "LaunchScreen", // Launch screen configuration
+  "CFBundleVersion": "1", // Prevent bundle version error
+  "UIApplicationSceneManifest": [
+    "UIApplicationSupportsMultipleScenes": true,
+    "UISceneConfigurations": [
+      "UIWindowSceneSessionRoleApplication": [
+        [
+          "UISceneClassName": "UIWindowScene",
+          "UISceneDelegateClassName": "$(PRODUCT_MODULE_NAME).SceneDelegate"
+        ]
+      ]
+    ]
+  ]
 ]
 
 let project = Project(
@@ -19,7 +30,7 @@ let project = Project(
       resources: ["Resources/**"],
       dependencies: [
         // Third party
-//        .external(name: "RxSwift", condition: .none),
+        //        .external(name: "RxSwift", condition: .none),
 
         // Module
         .project(target: "Presentation", path: .relativeToRoot("Presentation/"), status: .required, condition: .none),
