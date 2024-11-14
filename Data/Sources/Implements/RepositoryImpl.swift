@@ -9,7 +9,7 @@ public final class RepositoryImpl: Repository {
 
   public init() { }
 
-  // MARK: - fetch Movie List
+  // MARK: - Fetch movie list
   public func fetchMovieList() -> Observable<[Movie]> {
     guard let url = URL(string: "https://yts.mx/api/v2/list_movies.json") else { return Observable.just([]) }
     return URLRequest.get(url: url).map { (dto: ResponseDTO) in

@@ -42,5 +42,30 @@ let project = Project(
         .release(name: "Release"),
       ])
     ),
+
+    .target(
+      name: "CleanArchitectureUnitTests",
+      destinations: .iOS,
+      product: .unitTests,
+      bundleId: "com.cleanarchitecture.CleanArchitectureUnitTests",
+      infoPlist: .default,
+      sources: ["UnitTests/**"],
+      dependencies: [
+        .target(name: "CleanArchitecture", status: .optional, condition: .none),
+      ]
+    ),
+
+    .target(
+      name: "CleanArchitectureUITests",
+      destinations: .iOS,
+      product: .uiTests,
+      bundleId: "com.cleanarchitecture.CleanArchitectureUITests",
+      infoPlist: .default,
+      sources: ["UITests/**"],
+      dependencies: [
+        .target(name: "CleanArchitecture", status: .optional, condition: .none),
+      ]
+    ),
+
   ]
 )
